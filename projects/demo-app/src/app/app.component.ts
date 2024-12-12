@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { NgxFormCraftModule, NgxFormCraftService, NgxFromCraftConfig } from 'ngx-form-craft';
+import {
+  NgxFormCraftModule,
+  NgxFormCraftService,
+  NgxFromCraftConfig,
+  NgxFormCraftSettings,
+} from 'ngx-form-craft';
 
 @Component({
   selector: 'app-root',
@@ -10,38 +15,54 @@ import { NgxFormCraftModule, NgxFormCraftService, NgxFromCraftConfig } from 'ngx
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  fields: NgxFromCraftConfig[] = [
-    {
-      key: 'name',
-      type: 'input',
-      templateOptions: {
-        label: 'Name',
-        placeholder: 'Enter your name',
-        required: false,
+  formSetting: NgxFormCraftSettings = {
+    nzLayout: 'vertical',
+    formFields: [
+      {
+        key: 'name',
+        fieldConfig: {
+          type: 'input',
+          inputType: 'text',
+        },
+        errorMessage: '',
+        templateOptions: {
+          label: 'Name',
+          placeholder: 'Enter your name',
+          required: false,
+        },
       },
-    },
-    {
-      key: 'sur name',
-      type: 'input',
-      templateOptions: {
-        label: 'sur name',
-        placeholder: 'Enter your name',
-        required: true,
+      {
+        key: 'sur name',
+        fieldConfig: {
+          type: 'input',
+          inputType: 'text',
+        },
+        errorMessage: '',
+        templateOptions: {
+          label: 'sur name',
+          placeholder: 'Enter your name',
+          required: true,
+        },
       },
-    },
-    {
-      key: 'name',
-      type: 'input',
-      templateOptions: {
-        label: 'Name',
-        placeholder: 'Enter your name',
-        required: true,
+      {
+        key: 'ttt',
+        fieldConfig: {
+          type: 'input',
+          inputType: 'text',
+        },
+        errorMessage: '',
+        templateOptions: {
+          label: 'Name',
+          placeholder: 'Enter your name',
+          required: true,
+        },
       },
-    },
-  ];
-  form: FormGroup;
+    ],
+  };
+
+  form!: FormGroup;
 
   constructor(private formBuilder: NgxFormCraftService) {
-    this.form = this.formBuilder.createForm(this.fields);
+    this.form = this.formBuilder.createForm(this.formSetting.formFields);
   }
 }

@@ -1,7 +1,8 @@
-import { NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxFromCraftConfig } from '../../models/ngx-form-craft.model';
+import { FormGroup } from '@angular/forms';
+import {
+  NgxFormCraftSettings,
+} from '../../models/ngx-form-craft.model';
 
 @Component({
   selector: 'app-form-renderer',
@@ -9,6 +10,12 @@ import { NgxFromCraftConfig } from '../../models/ngx-form-craft.model';
   styleUrls: ['./form-renderer.component.css'],
 })
 export class FormRendererComponent {
-  @Input() fields: NgxFromCraftConfig[] = [];
-  @Input() form: FormGroup = new FormGroup({});
+  @Input()
+  configs: NgxFormCraftSettings = {
+    nzLayout: 'vertical',
+    formFields: [],
+  };
+  
+  @Input() 
+  form: FormGroup = new FormGroup({});
 }

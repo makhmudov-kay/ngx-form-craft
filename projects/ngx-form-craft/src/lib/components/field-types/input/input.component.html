@@ -1,0 +1,47 @@
+<nz-form-item>
+  <nz-form-label [nzRequired]="field.templateOptions.required">{{
+    field.templateOptions.label
+  }}</nz-form-label>
+  <nz-form-control>
+    <ng-container *ngIf="field.fieldConfig.type === 'input'">
+      <nz-input-group
+        [nzSuffix]="
+          field.fieldConfig.suffixIcon ? suffixTemplateInfo : undefined
+        "
+        [nzPrefix]="
+          field.fieldConfig.prefixIcon ? prefixTemplateUser : undefined
+        "
+      >
+        <input
+          nz-input
+          [type]="field.fieldConfig.inputType"
+          [formControl]="control"
+          [placeholder]="field.templateOptions.placeholder"
+        />
+      </nz-input-group>
+    </ng-container>
+  </nz-form-control>
+</nz-form-item>
+
+<ng-template #suffixTemplateInfo>
+  <ng-container
+    *ngIf="field.fieldConfig.type === 'input' && field.fieldConfig.suffixIcon"
+  >
+    <span
+      nz-icon
+      [nzType]="field.fieldConfig.suffixIcon"
+      nzTheme="outline"
+    ></span>
+  </ng-container>
+</ng-template>
+<ng-template #prefixTemplateUser>
+  <ng-container
+    *ngIf="field.fieldConfig.type === 'input' && field.fieldConfig.prefixIcon"
+  >
+    <span
+      nz-icon
+      [nzType]="field.fieldConfig.prefixIcon"
+      nzTheme="outline"
+    ></span>
+  </ng-container>
+</ng-template>

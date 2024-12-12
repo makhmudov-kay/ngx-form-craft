@@ -28,6 +28,9 @@ export class NgxFormCraftService {
       );
       formGroup.addControl(field.key, control);
     });
+
+    console.log(formGroup);
+    
     return formGroup;
   }
 }

@@ -1,20 +1,8 @@
-<form nz-form [formGroup]="form" nzLayout="vertical">
-  <ng-container *ngFor="let field of fields">
-    <ng-container [ngSwitch]="field.type">
+<form nz-form [formGroup]="form" [nzLayout]="configs.nzLayout">
+  <ng-container *ngFor="let field of configs.formFields">
+    <ng-container [ngSwitch]="field.fieldConfig.type">
       <div *ngSwitchCase="'input'">
-        <nz-form-item>
-          <nz-form-label [nzRequired]="field.templateOptions?.required">{{
-            field.templateOptions?.label
-          }}</nz-form-label>
-          <nz-form-control>
-            <input
-              nz-input
-              type="text"
-              [formControlName]="field.key"
-              [placeholder]="field.templateOptions?.placeholder"
-            />
-          </nz-form-control>
-        </nz-form-item>
+        <ngx-input-field [field]="field" [control]="form.get(field.key)"></ngx-input-field>
       </div>
     </ng-container>
   </ng-container>
