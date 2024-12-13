@@ -18,8 +18,15 @@ interface BaseField {
 export interface InputField extends BaseField {
   type: 'input';
   inputType: FieldTypes;
-  prefixIcon?: string
-  suffixIcon?: string
+  prefixIcon?: string;
+  suffixIcon?: string;
+  /**
+   * This field has two required parameters
+   * - ['initial icon', 'show password icon']
+   *
+   * Example: ['lock', 'unlock'], ['eye', 'eye-invisible']
+   *  */
+  passwordIcons?: [string, string];
 }
 
 interface TextareaField extends BaseField {
@@ -32,6 +39,8 @@ interface SelectField extends BaseField {
 
 type Field = InputField | TextareaField | SelectField;
 
+type FieldSize = 'small' | 'default' | 'large';
+
 export interface NgxFormCraftSettings {
   nzLayout: Layout;
   formFields: NgxFromCraftConfig[];
@@ -40,6 +49,7 @@ export interface NgxFormCraftSettings {
 export interface NgxFromCraftConfig {
   key: string;
   fieldConfig: Field;
+  size?: FieldSize;
   errorMessage: string;
   templateOptions: {
     label?: string;

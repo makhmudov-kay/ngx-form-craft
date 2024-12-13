@@ -1,8 +1,11 @@
-<form nz-form [formGroup]="form" [nzLayout]="configs.nzLayout">
+<form nz-form [formGroup]="form" [nzLayout]="configs.nzLayout || 'horizontal'">
   <ng-container *ngFor="let field of configs.formFields">
     <ng-container [ngSwitch]="field.fieldConfig.type">
       <div *ngSwitchCase="'input'">
-        <ngx-input-field [field]="field" [control]="form.get(field.key)"></ngx-input-field>
+        <ngx-input-field
+          [field]="field"
+          [control]="form.get(field.key)"
+        ></ngx-input-field>
       </div>
     </ng-container>
   </ng-container>

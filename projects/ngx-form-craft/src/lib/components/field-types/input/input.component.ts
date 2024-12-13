@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { NgxFromCraftConfig } from '../../../models/ngx-form-craft.model';
-import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'ngx-input-field',
@@ -13,4 +12,6 @@ export class InputComponent {
 
   @Input()
   control!: any;
+
+  passwordVisible = false;
 }

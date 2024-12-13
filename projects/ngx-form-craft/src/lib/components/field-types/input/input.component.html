@@ -1,47 +1,86 @@
-<nz-form-item>
-  <nz-form-label [nzRequired]="field.templateOptions.required">{{
-    field.templateOptions.label
-  }}</nz-form-label>
-  <nz-form-control>
-    <ng-container *ngIf="field.fieldConfig.type === 'input'">
-      <nz-input-group
-        [nzSuffix]="
-          field.fieldConfig.suffixIcon ? suffixTemplateInfo : undefined
-        "
-        [nzPrefix]="
-          field.fieldConfig.prefixIcon ? prefixTemplateUser : undefined
+<ng-container *ngIf="field.fieldConfig.type === 'input'">
+  <nz-form-item>
+    <nz-form-label [nzRequired]="field.templateOptions.required">{{
+      field.templateOptions.label
+    }}</nz-form-label>
+    <nz-form-control [nzErrorTip]="field.errorMessage">
+      <ng-container [ngSwitch]="field.fieldConfig.inputType">
+        <!-- PASSWORD INPUT TYPE -->
+        <ng-container *ngSwitchCase="'password'">
+          <nz-input-group
+            [nzSuffix]="suffixTemplateInfo"
+            [nzPrefix]="prefixTemplateUser"
+            [nzSize]="field.size || 'default'"
+          >
+            <input
+              [type]="passwordVisible ? 'text' : 'password'"
+              nz-input
+              [placeholder]="field.templateOptions.placeholder"
+              [formControl]="control"
+            />
+          </nz-input-group>
+        </ng-container>
+        <!-- DEFAULT INPUT -->
+        <ng-container *ngSwitchDefault>
+          <nz-input-group
+            [nzSuffix]="suffixTemplateInfo"
+            [nzPrefix]="prefixTemplateUser"
+            [nzSize]="field.size || 'default'"
+          >
+            <input
+              nz-input
+              [type]="field.fieldConfig.inputType"
+              [formControl]="control"
+              [placeholder]="field.templateOptions.placeholder"
+            />
+          </nz-input-group>
+        </ng-container>
+      </ng-container>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- SUFFIX ICON -->
+  <ng-template #suffixTemplateInfo>
+    <ng-container
+      *ngIf="field.fieldConfig.inputType === 'password'; else icons"
+    >
+      <ng-container
+        *ngIf="
+          field.fieldConfig.passwordIcons &&
+            field.fieldConfig.passwordIcons.length === 2;
+          else defaultIcons
         "
       >
-        <input
-          nz-input
-          [type]="field.fieldConfig.inputType"
-          [formControl]="control"
-          [placeholder]="field.templateOptions.placeholder"
-        />
-      </nz-input-group>
-    </ng-container>
-  </nz-form-control>
-</nz-form-item>
+        <span
+          nz-icon
+          [nzType]="
+            passwordVisible
+              ? field.fieldConfig.passwordIcons[1]
+              : field.fieldConfig.passwordIcons[0]
+          "
+          (click)="passwordVisible = !passwordVisible"
+        ></span>
+      </ng-container>
 
-<ng-template #suffixTemplateInfo>
-  <ng-container
-    *ngIf="field.fieldConfig.type === 'input' && field.fieldConfig.suffixIcon"
-  >
-    <span
-      nz-icon
-      [nzType]="field.fieldConfig.suffixIcon"
-      nzTheme="outline"
-    ></span>
-  </ng-container>
-</ng-template>
-<ng-template #prefixTemplateUser>
-  <ng-container
-    *ngIf="field.fieldConfig.type === 'input' && field.fieldConfig.prefixIcon"
-  >
-    <span
-      nz-icon
-      [nzType]="field.fieldConfig.prefixIcon"
-      nzTheme="outline"
-    ></span>
-  </ng-container>
-</ng-template>
+      <ng-template #defaultIcons>
+        <span
+          nz-icon
+          [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+          (click)="passwordVisible = !passwordVisible"
+        ></span>
+      </ng-template>
+    </ng-container>
+    <ng-template #icons>
+      <ng-container *ngIf="field.fieldConfig.suffixIcon">
+        <span nz-icon [nzType]="field.fieldConfig.suffixIcon"></span
+      ></ng-container>
+    </ng-template>
+  </ng-template>
+
+  <!-- PREFIX ICON -->
+  <ng-template #prefixTemplateUser>
+    <ng-container *ngIf="field.fieldConfig.prefixIcon">
+      <span nz-icon [nzType]="field.fieldConfig.prefixIcon"></span>
+    </ng-container>
+  </ng-template>
+</ng-container>

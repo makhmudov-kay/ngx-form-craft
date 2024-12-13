@@ -1,1 +1,5 @@
-<app-form-renderer [configs]="formSetting" [form]="form"></app-form-renderer>
+<div class="container">
+  <app-form-renderer [configs]="formSetting" [form]="form"></app-form-renderer>
+
+  <button nz-button nzType="primary" (click)="submit()">Submit</button>
+</div>

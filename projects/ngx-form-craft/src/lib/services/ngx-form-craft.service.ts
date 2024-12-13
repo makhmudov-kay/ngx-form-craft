@@ -29,8 +29,15 @@ export class NgxFormCraftService {
       formGroup.addControl(field.key, control);
     });
 
-    console.log(formGroup);
-    
     return formGroup;
+  }
+
+  markAsDirty(formGroup: FormGroup): void {
+    Object.values(formGroup.controls).forEach((control) => {
+      if (control.invalid) {
+        control.markAsDirty();
+        control.updateValueAndValidity({ onlySelf: true });
+      }
+    });
   }
 }

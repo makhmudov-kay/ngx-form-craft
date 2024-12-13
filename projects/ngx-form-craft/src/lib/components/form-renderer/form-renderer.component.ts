@@ -1,8 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import {
-  NgxFormCraftSettings,
-} from '../../models/ngx-form-craft.model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { NgxFormCraftSettings } from '../../models/ngx-form-craft.model';
 
 @Component({
   selector: 'app-form-renderer',
@@ -11,11 +9,8 @@ import {
 })
 export class FormRendererComponent {
   @Input()
-  configs: NgxFormCraftSettings = {
-    nzLayout: 'vertical',
-    formFields: [],
-  };
-  
-  @Input() 
+  configs!: NgxFormCraftSettings;
+
+  @Input()
   form: FormGroup = new FormGroup({});
 }
