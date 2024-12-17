@@ -1,31 +1,30 @@
 <ng-container *ngIf="field.fieldConfig.type === 'input'">
-  <nz-form-item>
-    <nz-form-label [nzRequired]="field.templateOptions.required">{{
-      field.templateOptions.label
-    }}</nz-form-label>
-    <nz-form-control [nzErrorTip]="field.errorMessage">
-      <ng-container [ngSwitch]="field.fieldConfig.inputType">
-        <!-- PASSWORD INPUT TYPE -->
-        <ng-container *ngSwitchCase="'password'">
+  <ng-container [ngSwitch]="field.fieldConfig.inputType">
+    <!-- PASSWORD TYPE -->
+    <ng-container *ngSwitchCase="'password'">
+      <password-type
+        [control]="control"
+        [field]="field"
+        [confirmPasswordControl]="confirmPasswordControl"
+      ></password-type>
+    </ng-container>
+
+    <!-- CHECKBOX_TYPE -->
+    <ng-container *ngSwitchCase="'checkbox'">
+      <checkbox-type [control]="control" [field]="field"></checkbox-type>
+    </ng-container>
+
+    <!-- DEFAULT TYPE -->
+    <ng-container *ngSwitchDefault>
+      <nz-form-item>
+        <nz-form-label [nzRequired]="field.templateOptions.required">{{
+          field.templateOptions.label
+        }}</nz-form-label>
+        <nz-form-control [nzErrorTip]="errorTpl">
           <nz-input-group
             [nzSuffix]="suffixTemplateInfo"
             [nzPrefix]="prefixTemplateUser"
-            [nzSize]="field.size || 'default'"
-          >
-            <input
-              [type]="passwordVisible ? 'text' : 'password'"
-              nz-input
-              [placeholder]="field.templateOptions.placeholder"
-              [formControl]="control"
-            />
-          </nz-input-group>
-        </ng-container>
-        <!-- DEFAULT INPUT -->
-        <ng-container *ngSwitchDefault>
-          <nz-input-group
-            [nzSuffix]="suffixTemplateInfo"
-            [nzPrefix]="prefixTemplateUser"
-            [nzSize]="field.size || 'default'"
+            [nzSize]="field.templateOptions.size || 'default'"
           >
             <input
               nz-input
@@ -34,47 +33,27 @@
               [placeholder]="field.templateOptions.placeholder"
             />
           </nz-input-group>
-        </ng-container>
-      </ng-container>
-    </nz-form-control>
-  </nz-form-item>
+          <ng-template #errorTpl let-control>
+            <ng-container *ngIf="control?.errors as errors">
+              <ng-container
+                *ngFor="let errorKey of errorMessage.errorKeys(errors)"
+              >
+                {{
+                  errorMessage.getErrorMessage(field.errorMessages, errorKey)
+                }}
+              </ng-container>
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </ng-container>
+  </ng-container>
 
   <!-- SUFFIX ICON -->
   <ng-template #suffixTemplateInfo>
-    <ng-container
-      *ngIf="field.fieldConfig.inputType === 'password'; else icons"
-    >
-      <ng-container
-        *ngIf="
-          field.fieldConfig.passwordIcons &&
-            field.fieldConfig.passwordIcons.length === 2;
-          else defaultIcons
-        "
-      >
-        <span
-          nz-icon
-          [nzType]="
-            passwordVisible
-              ? field.fieldConfig.passwordIcons[1]
-              : field.fieldConfig.passwordIcons[0]
-          "
-          (click)="passwordVisible = !passwordVisible"
-        ></span>
-      </ng-container>
-
-      <ng-template #defaultIcons>
-        <span
-          nz-icon
-          [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
-          (click)="passwordVisible = !passwordVisible"
-        ></span>
-      </ng-template>
-    </ng-container>
-    <ng-template #icons>
-      <ng-container *ngIf="field.fieldConfig.suffixIcon">
-        <span nz-icon [nzType]="field.fieldConfig.suffixIcon"></span
-      ></ng-container>
-    </ng-template>
+    <ng-container *ngIf="field.fieldConfig.suffixIcon">
+      <span nz-icon [nzType]="field.fieldConfig.suffixIcon"></span
+    ></ng-container>
   </ng-template>
 
   <!-- PREFIX ICON -->

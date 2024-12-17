@@ -1,0 +1,34 @@
+<ng-container *ngIf="checkboxTypeField.checkBoxType === 'single'">
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="errorTpl">
+      <label nz-checkbox [formControl]="control">
+        <span> {{ checkboxTypeField.checkBoxOptions.label }} </span>
+      </label>
+    </nz-form-control>
+    <ng-template #errorTpl let-control>
+      <ng-container *ngIf="control?.errors as errors">
+        <ng-container *ngFor="let errorKey of errorMessage.errorKeys(errors)">
+          {{ errorMessage.getErrorMessage(field.errorMessages, errorKey) }}
+        </ng-container>
+      </ng-container>
+    </ng-template>
+  </nz-form-item>
+</ng-container>
+
+<ng-container *ngIf="checkboxTypeField.checkBoxType === 'multiple'">
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="errorTpl">
+      <nz-checkbox-group
+        [formControl]="control"
+        [ngModel]="checkboxTypeField.checkBoxOptions"
+      ></nz-checkbox-group>
+    </nz-form-control>
+    <ng-template #errorTpl let-control>
+      <ng-container *ngIf="control?.errors as errors">
+        <ng-container *ngFor="let errorKey of errorMessage.errorKeys(errors)">
+          {{ errorMessage.getErrorMessage(field.errorMessages, errorKey) }}
+        </ng-container>
+      </ng-container>
+    </ng-template>
+  </nz-form-item>
+</ng-container>

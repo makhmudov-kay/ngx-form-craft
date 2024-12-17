@@ -7,6 +7,9 @@ import { InputComponent } from './components/field-types/input/input.component';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { InputTypePasswordComponent } from './components/field-types/input-type-password/input-type-password.component';
+import { CheckboxTypeComponent } from './components/field-types/checkbox-type/checkbox-type.component';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @NgModule({
   imports: [
@@ -16,8 +19,15 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzFormModule,
     NzInputModule,
     NzIconModule,
+    NzCheckboxModule,
   ],
   exports: [FormRendererComponent],
-  declarations: [FormRendererComponent, InputComponent],
+
+  declarations: [
+    FormRendererComponent,
+    InputComponent,
+    InputTypePasswordComponent,
+    CheckboxTypeComponent,
+  ],
 })
 export class NgxFormCraftModule {}

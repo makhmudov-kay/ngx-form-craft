@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="input-forms">
+    <h2>Input forms</h2>
+    <app-form-renderer
+      [configs]="formSetting"
+      [form]="inputForm"
+    ></app-form-renderer>
+
+    <button nz-button nzType="primary" (click)="submit()">Submit</button>
+  </div>
+</div>

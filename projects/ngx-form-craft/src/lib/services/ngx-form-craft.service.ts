@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { NgxFromCraftConfig } from '../models/ngx-form-craft.model';
 import {
+  AsyncValidatorFn,
   FormControl,
   FormGroup,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { NgxFormCraftValidators } from '../utils/confirm-password.util';
+import { PasswordFieldWithConfirm } from '../models/password-type.model';
+import { CheckBoxField } from '../models/checkbox-type.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,20 +16,58 @@ import {
 export class NgxFormCraftService {
   createForm(fields: NgxFromCraftConfig[]): FormGroup {
     const formGroup = new FormGroup({});
+
     fields.forEach((field) => {
+      let initialValue = field.initialValue || '';
+
+      // const checkBoxField = field.fieldConfig as CheckBoxField;
+      // // Для чекбоксов инициализируем правильные значения
+      // if (checkBoxField.inputType === 'checkbox') {
+      //   initialValue as boolean;
+      //   if (checkBoxField.checkBoxType === 'single') {
+      //     initialValue = !!initialValue; // Приведение к булевому значению
+      //   } else if (checkBoxField.checkBoxType === 'multiple') {
+      //     initialValue = Array.isArray(initialValue) ? initialValue : [];
+      //   }
+      // }
+
       const validators = Array.isArray(field.validators)
         ? field.validators
         : field.validators
         ? [field.validators]
         : null;
 
+      const asyncValidators: AsyncValidatorFn[] | null = Array.isArray(
+        field.asyncValidators
+      )
+        ? field.asyncValidators
+        : field.asyncValidators
+        ? [field.asyncValidators]
+        : null;
+
       const control = new FormControl(
-        '',
-        field.validators
-          ? Validators.compose(validators as ValidatorFn[])
-          : null
+        initialValue,
+        validators ? Validators.compose(validators) : null,
+        asyncValidators ? Validators.composeAsync(asyncValidators) : null
       );
       formGroup.addControl(field.key, control);
+
+      const passFieldWithConfirm =
+        field.fieldConfig as PasswordFieldWithConfirm;
+
+      if (
+        passFieldWithConfirm.confirmPassword &&
+        passFieldWithConfirm.confirmFieldKey
+      ) {
+        const confirmControl = new FormControl('', [
+          Validators.required,
+          NgxFormCraftValidators.confirmMatchPasswordValidator(field.key),
+        ]);
+        formGroup.addControl(
+          passFieldWithConfirm.confirmFieldKey,
+          confirmControl
+        );
+      }
     });
 
     return formGroup;
