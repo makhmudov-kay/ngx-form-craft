@@ -22,7 +22,7 @@ export class RadioAndCheckboxFormComponent {
   formConfigurations: NgxFromCraftConfig[] = [
     {
       key: 'animals',
-      initialValue: 1,
+      initialValue: false,
       fieldConfig: {
         type: 'input',
         inputType: 'checkbox',
@@ -71,10 +71,10 @@ export class RadioAndCheckboxFormComponent {
   }
 
   submit() {
-    if (this.form.invalid) {
-      this.formBuilder.markAsDirty(this.form);
-      return;
-    }
+    // if (this.form.invalid) {
+    //   this.formBuilder.markAsDirty(this.form);
+    //   return;
+    // }
     console.log(this.form);
     console.log(this.form.getRawValue());
   }

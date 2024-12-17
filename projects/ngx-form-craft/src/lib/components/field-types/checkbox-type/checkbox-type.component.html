@@ -18,10 +18,7 @@
 <ng-container *ngIf="checkboxTypeField.checkBoxType === 'multiple'">
   <nz-form-item>
     <nz-form-control [nzErrorTip]="errorTpl">
-      <nz-checkbox-group
-        [formControl]="control"
-        [ngModel]="checkboxTypeField.checkBoxOptions"
-      ></nz-checkbox-group>
+      <nz-checkbox-group [formControl]="control"></nz-checkbox-group>
     </nz-form-control>
     <ng-template #errorTpl let-control>
       <ng-container *ngIf="control?.errors as errors">

@@ -20,16 +20,16 @@ export class NgxFormCraftService {
     fields.forEach((field) => {
       let initialValue = field.initialValue || '';
 
-      // const checkBoxField = field.fieldConfig as CheckBoxField;
-      // // Для чекбоксов инициализируем правильные значения
-      // if (checkBoxField.inputType === 'checkbox') {
-      //   initialValue as boolean;
-      //   if (checkBoxField.checkBoxType === 'single') {
-      //     initialValue = !!initialValue; // Приведение к булевому значению
-      //   } else if (checkBoxField.checkBoxType === 'multiple') {
-      //     initialValue = Array.isArray(initialValue) ? initialValue : [];
-      //   }
-      // }
+      const checkBoxField = field.fieldConfig as CheckBoxField;
+      // Для чекбоксов инициализируем правильные значения
+      if (checkBoxField.inputType === 'checkbox') {
+        initialValue as boolean;
+        if (checkBoxField.checkBoxType === 'single') {
+          initialValue = !!initialValue; // Приведение к булевому значению
+        } else if (checkBoxField.checkBoxType === 'multiple') {
+          initialValue = Array.isArray(checkBoxField.checkBoxOptions) ? checkBoxField.checkBoxOptions : [];
+        }
+      }
 
       const validators = Array.isArray(field.validators)
         ? field.validators
