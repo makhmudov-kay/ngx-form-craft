@@ -1,15 +1,49 @@
 <form nz-form [formGroup]="form" [nzLayout]="configs.nzLayout || 'horizontal'">
-  <ng-container *ngFor="let field of configs.formFields">
-    <ng-container [ngSwitch]="field.fieldConfig.type">
-      <div *ngSwitchCase="'input'">
-        <ngx-input-field
-          [field]="field"
-          [control]="form.get(field.key)"
-          [confirmPasswordControl]="
-            form.get(confirmPasswordType(field.fieldConfig).confirmFieldKey)
-          "
-        ></ngx-input-field>
+  <div [class]="configs.formClass || ''" [style]="configs.formStyle || {}">
+    <ng-container *ngFor="let field of configs.formFields">
+      <div
+        [class]="field.templateOptions.fieldClass || ''"
+        [style]="field.templateOptions.fieldStyle || {}"
+      >
+        <!-- Кастомный шаблон -->
+        <ng-container *ngIf="getCustomTemplate(field.key) as customTemplate">
+          <ng-container
+            *ngTemplateOutlet="
+              customTemplate;
+              context: { field: field, form: form }
+            "
+          ></ng-container>
+        </ng-container>
+        <!-- Стандартное рендеринг -->
+        <ng-container *ngIf="!getCustomTemplate(field.key)">
+          <ng-container [ngSwitch]="field.fieldConfig.type">
+            <div *ngSwitchCase="'input'">
+              <ngx-input-field
+                [field]="field"
+                [control]="form.get(field.key)"
+                [confirmPasswordControl]="
+                  form.get(
+                    confirmPasswordType(field.fieldConfig).confirmFieldKey
+                  )
+                "
+              ></ngx-input-field>
+            </div>
+
+            <div *ngSwitchCase="'select'">
+              <ngx-select-field
+                [field]="field"
+                [control]="form.get(field.key)"
+              ></ngx-select-field>
+            </div>
+            <div *ngSwitchCase="'textarea'">
+              <ngx-textarea-field
+                [field]="field"
+                [control]="form.get(field.key)"
+              ></ngx-textarea-field>
+            </div>
+          </ng-container>
+        </ng-container>
       </div>
     </ng-container>
-  </ng-container>
+  </div>
 </form>

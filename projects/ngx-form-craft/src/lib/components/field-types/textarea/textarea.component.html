@@ -1,0 +1,42 @@
+<ng-container *ngIf="field.fieldConfig.type === 'textarea'">
+  <nz-form-item>
+    <nz-form-label>{{ field.templateOptions.label }}</nz-form-label>
+    <nz-form-control [nzErrorTip]="errorTpl">
+      <ng-container
+        *ngIf="
+          field.fieldConfig.textAreaConfigs.maxCharacterCount;
+          else noMaxCharacterCount
+        "
+      >
+        <nz-textarea-count
+          [nzMaxCharacterCount]="
+            field.fieldConfig.textAreaConfigs.maxCharacterCount
+          "
+        >
+          <textarea
+            nz-input
+            [nzSize]="field.templateOptions.size || 'default'"
+            [placeholder]="field.templateOptions.placeholder"
+            [formControl]="control"
+            [nzAutosize]="field.fieldConfig.textAreaConfigs.sizeConfig || false"
+          ></textarea>
+        </nz-textarea-count>
+      </ng-container>
+      <ng-template #noMaxCharacterCount>
+        <textarea
+          nz-input
+          [nzSize]="field.templateOptions.size || 'default'"
+          [placeholder]="field.templateOptions.placeholder"
+          [formControl]="control"
+          [nzAutosize]="field.fieldConfig.textAreaConfigs.sizeConfig || false"
+        ></textarea>
+      </ng-template>
+    </nz-form-control>
+    <ng-template #errorTpl let-control>
+      <ngx-form-craft-error-messages
+        [control]="control"
+        [errorMessages]="field.errorMessages"
+      ></ngx-form-craft-error-messages>
+    </ng-template>
+  </nz-form-item>
+</ng-container>

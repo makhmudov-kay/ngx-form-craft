@@ -1,0 +1,37 @@
+<nz-form-item>
+  <nz-form-label>{{ field.templateOptions.label }}</nz-form-label>
+  <nz-form-control [nzErrorTip]="errorTpl">
+    <nz-input-group
+      [nzSuffix]="suffixTemplateInfo"
+      [nzPrefix]="prefixTemplateUser"
+      [nzSize]="field.templateOptions.size || 'default'"
+    >
+      <input
+        nz-input
+        type="number"
+        [formControlName]="field.key"
+        [min]="numberTypeField.numberOptions.min || null"
+        [max]="numberTypeField.numberOptions.max || null"
+        [placeholder]="field.templateOptions.placeholder"
+    /></nz-input-group>
+  </nz-form-control>
+  <ng-template #errorTpl let-control>
+    <ngx-form-craft-error-messages
+      [control]="control"
+      [errorMessages]="field.errorMessages"
+    ></ngx-form-craft-error-messages>
+  </ng-template>
+</nz-form-item>
+
+<ng-template #suffixTemplateInfo>
+  <ng-container *ngIf="numberTypeField.suffixIcon">
+    <span nz-icon [nzType]="numberTypeField.suffixIcon"></span
+  ></ng-container>
+</ng-template>
+
+<!-- PREFIX ICON -->
+<ng-template #prefixTemplateUser>
+  <ng-container *ngIf="numberTypeField.prefixIcon">
+    <span nz-icon [nzType]="numberTypeField.prefixIcon"></span>
+  </ng-container>
+</ng-template>

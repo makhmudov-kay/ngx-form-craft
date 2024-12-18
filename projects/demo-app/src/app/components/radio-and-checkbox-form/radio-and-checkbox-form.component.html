@@ -1,11 +1,13 @@
 <div class="container">
   <div class="input-forms">
     <h2>Input forms</h2>
-    <app-form-renderer
+    <ngx-form-craft-renderer
       [configs]="formSetting"
       [form]="form"
-    ></app-form-renderer>
+    ></ngx-form-craft-renderer>
 
     <button nz-button nzType="primary" (click)="submit()">Submit</button>
   </div>
 </div>
+
+<app-radio></app-radio>

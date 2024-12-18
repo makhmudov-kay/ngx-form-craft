@@ -1,6 +1,8 @@
 import { CheckBoxField } from './checkbox-type.model';
 import { BaseField } from './common.model';
+import { NumberField } from './number-type.modle';
 import { PasswordField } from './password-type.model';
+import { RadioField } from './radio-type.model';
 
 export type FieldTypes =
   | 'text'
@@ -8,7 +10,6 @@ export type FieldTypes =
   | 'checkbox'
   | 'radio'
   | 'number'
-  | 'file'
   | 'password';
 
 export interface InputFieldBase extends BaseField {
@@ -25,4 +26,9 @@ export interface InputFieldBase extends BaseField {
   passwordIcons?: [string, string];
 }
 
-export type InputField = InputFieldBase | PasswordField | CheckBoxField;
+export type InputField =
+  | InputFieldBase
+  | PasswordField
+  | CheckBoxField
+  | RadioField
+  | NumberField;

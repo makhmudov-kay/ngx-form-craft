@@ -1,0 +1,25 @@
+<ng-container *ngIf="field.fieldConfig.type === 'select'">
+  <nz-form-item>
+    <nz-form-label>{{ field.templateOptions.label }}</nz-form-label>
+    <nz-form-control [nzErrorTip]="errorTpl">
+      <nz-select
+        [formControl]="control"
+        nzAllowClear
+        [nzPlaceHolder]="field.templateOptions.placeholder || ''"
+        [nzSize]="field.templateOptions.size || 'default'"
+      >
+        <nz-option
+          *ngFor="let option of field.fieldConfig.selectOptions"
+          [nzValue]="option.value"
+          [nzLabel]="option.label"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+    <ng-template #errorTpl let-control>
+      <ngx-form-craft-error-messages
+        [control]="control"
+        [errorMessages]="field.errorMessages"
+      ></ngx-form-craft-error-messages>
+    </ng-template>
+  </nz-form-item>
+</ng-container>

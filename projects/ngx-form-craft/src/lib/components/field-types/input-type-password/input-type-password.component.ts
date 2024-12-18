@@ -1,8 +1,7 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   NgxFromCraftConfig,
 } from '../../../models/ngx-form-craft.model';
-import { ErrorMessagesService } from '../../../services/error-messages.service';
 import { InputField } from '../../../models/input-type.model';
 import { PasswordFieldWithConfirm } from '../../../models/password-type.model';
 
@@ -20,8 +19,6 @@ export class InputTypePasswordComponent {
 
   @Input()
   confirmPasswordControl!: any;
-
-  errorMessage = inject(ErrorMessagesService);
 
   get passwordTypeField(): InputField {
     return this.field.fieldConfig as InputField;

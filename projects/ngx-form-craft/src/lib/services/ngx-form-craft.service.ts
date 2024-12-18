@@ -9,6 +9,7 @@ import {
 import { NgxFormCraftValidators } from '../utils/confirm-password.util';
 import { PasswordFieldWithConfirm } from '../models/password-type.model';
 import { CheckBoxField } from '../models/checkbox-type.model';
+import { isNumberValidator } from '../utils/custom-validators';
 
 @Injectable({
   providedIn: 'root',
@@ -20,14 +21,58 @@ export class NgxFormCraftService {
     fields.forEach((field) => {
       let initialValue = field.initialValue || '';
 
-      const checkBoxField = field.fieldConfig as CheckBoxField;
-      // Для чекбоксов инициализируем правильные значения
-      if (checkBoxField.inputType === 'checkbox') {
-        initialValue as boolean;
-        if (checkBoxField.checkBoxType === 'single') {
-          initialValue = !!initialValue; // Приведение к булевому значению
-        } else if (checkBoxField.checkBoxType === 'multiple') {
-          initialValue = Array.isArray(checkBoxField.checkBoxOptions) ? checkBoxField.checkBoxOptions : [];
+      if (field.fieldConfig.type === 'input') {
+        if (field.fieldConfig.inputType === 'checkbox') {
+          const checkBoxField = field.fieldConfig as CheckBoxField;
+          initialValue as boolean;
+          if (checkBoxField.checkBoxType === 'single') {
+            initialValue = !!initialValue;
+          } else if (checkBoxField.checkBoxType === 'multiple') {
+            initialValue = Array.isArray(checkBoxField.checkBoxOptions)
+              ? checkBoxField.checkBoxOptions
+              : [];
+          }
+        }
+
+        // Обработка числовых полей
+        if (field.fieldConfig.inputType === 'number') {
+          // Проверяем, является ли initialValue валидным числом
+          if (
+            field.initialValue === null ||
+            field.initialValue === undefined ||
+            field.initialValue === ''
+          ) {
+            initialValue = null; // Устанавливаем значение null для пустого ввода
+          } else if (!isNaN(Number(field.initialValue))) {
+            initialValue = Number(field.initialValue); // Преобразуем в число
+          } else {
+            initialValue = null; // Если преобразование в число невозможно, значение null
+          }
+
+          // Добавляем валидатор isNumberValidator
+          const isNumber = isNumberValidator();
+          field.validators = Array.isArray(field.validators)
+            ? [...field.validators, isNumber]
+            : [field.validators || isNumber];
+        }
+
+        if (field.fieldConfig.inputType === 'password') {
+          const passFieldWithConfirm =
+            field.fieldConfig as PasswordFieldWithConfirm;
+
+          if (
+            passFieldWithConfirm.confirmPassword &&
+            passFieldWithConfirm.confirmFieldKey
+          ) {
+            const confirmControl = new FormControl('', [
+              Validators.required,
+              NgxFormCraftValidators.confirmMatchPasswordValidator(field.key),
+            ]);
+            formGroup.addControl(
+              passFieldWithConfirm.confirmFieldKey,
+              confirmControl
+            );
+          }
         }
       }
 
@@ -51,23 +96,6 @@ export class NgxFormCraftService {
         asyncValidators ? Validators.composeAsync(asyncValidators) : null
       );
       formGroup.addControl(field.key, control);
-
-      const passFieldWithConfirm =
-        field.fieldConfig as PasswordFieldWithConfirm;
-
-      if (
-        passFieldWithConfirm.confirmPassword &&
-        passFieldWithConfirm.confirmFieldKey
-      ) {
-        const confirmControl = new FormControl('', [
-          Validators.required,
-          NgxFormCraftValidators.confirmMatchPasswordValidator(field.key),
-        ]);
-        formGroup.addControl(
-          passFieldWithConfirm.confirmFieldKey,
-          confirmControl
-        );
-      }
     });
 
     return formGroup;

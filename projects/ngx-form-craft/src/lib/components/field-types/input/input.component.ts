@@ -1,6 +1,5 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgxFromCraftConfig } from '../../../models/ngx-form-craft.model';
-import { ErrorMessagesService } from '../../../services/error-messages.service';
 
 @Component({
   selector: 'ngx-input-field',
@@ -16,6 +15,4 @@ export class InputComponent {
 
   @Input()
   confirmPasswordControl!: any;
-
-  errorMessage = inject(ErrorMessagesService);
 }

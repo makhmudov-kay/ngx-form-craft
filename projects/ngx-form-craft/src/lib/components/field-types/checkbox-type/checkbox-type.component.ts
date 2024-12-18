@@ -1,6 +1,5 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgxFromCraftConfig } from '../../../models/ngx-form-craft.model';
-import { ErrorMessagesService } from '../../../services/error-messages.service';
 import { CheckBoxField } from '../../../models/checkbox-type.model';
 
 @Component({
@@ -14,8 +13,6 @@ export class CheckboxTypeComponent {
 
   @Input()
   control!: any;
-
-  errorMessage = inject(ErrorMessagesService);
 
   get checkboxTypeField(): CheckBoxField {
     return this.field.fieldConfig as CheckBoxField;

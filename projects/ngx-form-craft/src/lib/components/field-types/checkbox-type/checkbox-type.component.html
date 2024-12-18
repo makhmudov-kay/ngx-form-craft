@@ -1,31 +1,31 @@
 <ng-container *ngIf="checkboxTypeField.checkBoxType === 'single'">
   <nz-form-item>
-    <nz-form-control [nzErrorTip]="errorTpl">
+    <nz-form-label>{{ field.templateOptions.label }}</nz-form-label>
+    <nz-form-control [nzErrorTip]="errorTplSingle">
       <label nz-checkbox [formControl]="control">
         <span> {{ checkboxTypeField.checkBoxOptions.label }} </span>
       </label>
     </nz-form-control>
-    <ng-template #errorTpl let-control>
-      <ng-container *ngIf="control?.errors as errors">
-        <ng-container *ngFor="let errorKey of errorMessage.errorKeys(errors)">
-          {{ errorMessage.getErrorMessage(field.errorMessages, errorKey) }}
-        </ng-container>
-      </ng-container>
+    <ng-template #errorTplSingle let-control>
+      <ngx-form-craft-error-messages
+        [control]="control"
+        [errorMessages]="field.errorMessages"
+      ></ngx-form-craft-error-messages>
     </ng-template>
   </nz-form-item>
 </ng-container>
 
 <ng-container *ngIf="checkboxTypeField.checkBoxType === 'multiple'">
   <nz-form-item>
-    <nz-form-control [nzErrorTip]="errorTpl">
+    <nz-form-label>{{ field.templateOptions.label }}</nz-form-label>
+    <nz-form-control [nzErrorTip]="errorTplMultiple">
       <nz-checkbox-group [formControl]="control"></nz-checkbox-group>
     </nz-form-control>
-    <ng-template #errorTpl let-control>
-      <ng-container *ngIf="control?.errors as errors">
-        <ng-container *ngFor="let errorKey of errorMessage.errorKeys(errors)">
-          {{ errorMessage.getErrorMessage(field.errorMessages, errorKey) }}
-        </ng-container>
-      </ng-container>
+    <ng-template #errorTplMultiple let-control>
+      <ngx-form-craft-error-messages
+        [control]="control"
+        [errorMessages]="field.errorMessages"
+      ></ngx-form-craft-error-messages>
     </ng-template>
   </nz-form-item>
 </ng-container>

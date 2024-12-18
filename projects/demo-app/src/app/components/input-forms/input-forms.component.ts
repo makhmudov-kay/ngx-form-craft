@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzIconModule, NzIconService } from 'ng-zorro-antd/icon';
 import {
   NgxFormCraftModule,
@@ -11,18 +11,25 @@ import { NzIconLiterals } from '../../configs/nz-icon.literals';
 import { usernameAsyncValidator } from '../../configs/custom-validators';
 import { UserService } from '../../services/user.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 @Component({
   selector: 'app-input-forms',
   templateUrl: './input-forms.component.html',
   styleUrls: ['./input-forms.component.css'],
   standalone: true,
-  imports: [NgxFormCraftModule, NzButtonModule, NzIconModule],
+  imports: [
+    NgxFormCraftModule,
+    NzButtonModule,
+    NzIconModule,
+    NzFormModule,
+    ReactiveFormsModule,
+  ],
 })
 export class InputFormsComponent {
   constructor(
     private formBuilder: NgxFormCraftService,
-    private iconService: NzIconService // private userService: UserService
+    private iconService: NzIconService
   ) {
     this.inputForm = this.formBuilder.createForm(this.formConfigurations);
     this.iconService.addIconLiteral('icon:my-lock', NzIconLiterals.icons.lock);
@@ -48,6 +55,7 @@ export class InputFormsComponent {
         placeholder: 'Enter your first name',
         required: true,
         size: 'large',
+        fieldClass: ['col-span-1'],
       },
       errorMessages: {
         required: 'Required field',
@@ -70,42 +78,12 @@ export class InputFormsComponent {
         placeholder: 'Enter your last name',
         required: true,
         size: 'large',
+        fieldClass: ['col-span-1'],
       },
       errorMessages: {
         required: 'Required field',
       },
       validators: [Validators.required],
-    },
-    {
-      key: 'phone',
-      fieldConfig: {
-        type: 'input',
-        inputType: 'text',
-        prefixIcon: 'icon:my-lock',
-      },
-      errorMessages: {
-        required: 'Required field',
-      },
-      templateOptions: {
-        label: 'Phone number (small size input field)',
-        placeholder: '+998',
-        size: 'small',
-      },
-    },
-    {
-      key: 'email',
-      fieldConfig: {
-        type: 'input',
-        inputType: 'email',
-        prefixIcon: 'icon:my-lock',
-      },
-      errorMessages: {
-        required: 'Required field',
-      },
-      templateOptions: {
-        label: 'E-mail (default size input field)',
-        placeholder: 'example@mail',
-      },
     },
     {
       key: 'password',
@@ -123,13 +101,50 @@ export class InputFormsComponent {
         placeholder: '',
         required: true,
         size: 'large',
+        fieldClass: ['col-span-2'],
       },
       errorMessages: {
         required: 'Required field',
-        passwordsMismatch: 'Password does not match', // сообщение для полей password и password-confirm по не совпадению
+        passwordsMismatch: 'Password does not match',
       },
       validators: [Validators.required],
     },
+    {
+      key: 'phone',
+      fieldConfig: {
+        type: 'input',
+        inputType: 'text',
+        prefixIcon: 'icon:my-lock',
+      },
+      errorMessages: {
+        required: 'Required field',
+      },
+      templateOptions: {
+        label: 'Phone number (small size input field)',
+        placeholder: '+998',
+        size: 'small',
+        fieldClass: ['col-span-2'],
+      },
+    },
+    {
+      key: 'email',
+      fieldConfig: {
+        type: 'input',
+        inputType: 'email',
+        prefixIcon: 'icon:my-lock',
+      },
+      errorMessages: {
+        required: 'Required field',
+        email: 'Поле должно быть валидным e-mail',
+      },
+      templateOptions: {
+        label: 'E-mail (default size input field)',
+        placeholder: 'example@mail',
+        fieldClass: ['col-span-2'],
+      },
+      validators: [Validators.required, Validators.email],
+    },
+
     {
       key: 'password-two',
 
@@ -153,6 +168,7 @@ export class InputFormsComponent {
   formSetting: NgxFormCraftSettings = {
     nzLayout: 'vertical',
     formFields: this.formConfigurations,
+    formClass: ['grid', 'grid-cols-2', 'gap-4'],
   };
 
   inputForm!: FormGroup;

@@ -65,7 +65,7 @@
               }
             ],
             "styles": [
-              "projects/demo-app/src/styles.css"
+              "projects/demo-app/src/styles.less"
             ],
             "scripts": []
           },

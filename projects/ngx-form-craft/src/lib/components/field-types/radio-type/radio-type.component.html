@@ -1,0 +1,9 @@
+<nz-form-item>
+  <nz-form-control>
+    <nz-radio-group [formControl]="control">
+      @for (option of radioTypeField.radioOptions; track option.value) {
+      <label nz-radio [nzValue]="option.value">{{ option.label }}</label>
+      }
+    </nz-radio-group>
+  </nz-form-control>
+</nz-form-item>

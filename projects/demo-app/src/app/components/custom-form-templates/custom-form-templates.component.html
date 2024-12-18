@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="input-forms">
+    <h2>Custom forms template</h2>
+    <ngx-form-craft-renderer [configs]="formSetting" [form]="inputForm">
+      <!-- Кастомный шаблон для firstName -->
+      <ng-template customTemplate="firstName" let-field="field" let-form="form">
+        <div [formGroup]="form" class="group">
+          <input type="text" required [formControlName]="field.key" />
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>{{ field.templateOptions.label }}</label>
+
+          @if(form.get(field.key).touched || form.get(field.key).dirty ) {
+          @if(form.get(field.key).invalid) {
+          <small>
+            <ngx-form-craft-error-messages
+              [control]="form.get(field.key)"
+              [errorMessages]="field.errorMessages"
+            ></ngx-form-craft-error-messages>
+          </small>
+          } }
+        </div>
+      </ng-template>
+
+      <!-- Кастомный шаблон для email -->
+      <ng-template customTemplate="email" let-field="field" let-form="form">
+        <div [formGroup]="form" class="group">
+          <input type="text" required [formControlName]="field.key" />
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>{{ field.templateOptions.label }}</label>
+          @if(form.get(field.key).touched || form.get(field.key).dirty ) {
+          @if(form.get(field.key).invalid) {
+          <small>
+            <ngx-form-craft-error-messages
+              [control]="form.get(field.key)"
+              [errorMessages]="field.errorMessages"
+            ></ngx-form-craft-error-messages>
+          </small>
+          } }
+        </div>
+      </ng-template>
+    </ngx-form-craft-renderer>
+
+    <button nz-button nzType="primary" (click)="submit()">Submit</button>
+  </div>
+</div>

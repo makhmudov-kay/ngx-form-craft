@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import {
@@ -8,13 +8,14 @@ import {
   NgxFormCraftSettings,
   NgxFromCraftConfig,
 } from 'ngx-form-craft';
+import { RadioComponent } from './radio/radio.component';
 
 @Component({
   selector: 'app-radio-and-checkbox-form',
   templateUrl: './radio-and-checkbox-form.component.html',
   styleUrls: ['./radio-and-checkbox-form.component.css'],
   standalone: true,
-  imports: [NgxFormCraftModule, NzButtonModule, NzIconModule],
+  imports: [NgxFormCraftModule, NzButtonModule, NzIconModule, RadioComponent],
 })
 export class RadioAndCheckboxFormComponent {
   form!: FormGroup;
@@ -22,7 +23,6 @@ export class RadioAndCheckboxFormComponent {
   formConfigurations: NgxFromCraftConfig[] = [
     {
       key: 'animals',
-      initialValue: false,
       fieldConfig: {
         type: 'input',
         inputType: 'checkbox',
@@ -33,7 +33,10 @@ export class RadioAndCheckboxFormComponent {
         },
       },
       errorMessages: {},
-      templateOptions: {},
+      templateOptions: {
+        label: 'Animals',
+      },
+      validators: [Validators.required],
     },
     {
       key: 'jobs',
@@ -58,6 +61,7 @@ export class RadioAndCheckboxFormComponent {
       },
       errorMessages: {},
       templateOptions: {},
+      validators: [Validators.required],
     },
   ];
 
@@ -71,10 +75,10 @@ export class RadioAndCheckboxFormComponent {
   }
 
   submit() {
-    // if (this.form.invalid) {
-    //   this.formBuilder.markAsDirty(this.form);
-    //   return;
-    // }
+    if (this.form.invalid) {
+      this.formBuilder.markAsDirty(this.form);
+      return;
+    }
     console.log(this.form);
     console.log(this.form.getRawValue());
   }
