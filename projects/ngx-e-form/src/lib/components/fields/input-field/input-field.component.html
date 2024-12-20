@@ -1,0 +1,14 @@
+<div [ngClass]="config.fieldClass" [ngStyle]="config.fieldStyle">
+  <label *ngIf="config.label">{{ config.label }}</label>
+  <input
+    [type]="config.inputType || 'text'"
+    [formControl]="control"
+    [placeholder]="config.placeholder"
+    (focus)="config.events?.onFocus && config.events.onFocus(control?.value)"
+    (blur)="config.events?.onBlur && config.events.onBlur(control?.value)"
+    (input)="config.events?.onChange && config.events.onChange(control?.value)"
+  />
+  <div class="error" *ngFor="let errorKey of Object.keys(errors)">
+    {{ config.errorMesages?.[errorKey] || errorKey }}
+  </div>
+</div>

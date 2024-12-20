@@ -12,6 +12,9 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "paths": {
+      "ngx-e-form": [
+        "./dist/ngx-e-form"
+      ],
       "ngx-form-craft": [
         "./dist/ngx-form-craft"
       ]

@@ -1,0 +1,65 @@
+<form
+  [formGroup]="form"
+  [ngClass]="config.formClass"
+  [ngStyle]="config.formStyles"
+  (ngSubmit)="onSubmit()"
+>
+  <ng-container *ngFor="let fieldName of fieldNames">
+    <ng-container [ngSwitch]="getFieldType(fieldName)">
+      <app-input-field
+        *ngSwitchCase="'input'"
+        [form]="form"
+        [fieldName]="fieldName"
+        [config]="config.fields[fieldName]"
+      ></app-input-field>
+      <app-select-field
+        *ngSwitchCase="'select'"
+        [form]="form"
+        [fieldName]="fieldName"
+        [config]="config.fields[fieldName]"
+      ></app-select-field>
+      <app-radio-field
+        *ngSwitchCase="'radio'"
+        [form]="form"
+        [fieldName]="fieldName"
+        [config]="config.fields[fieldName]"
+      ></app-radio-field>
+      <app-checkbox-field
+        *ngSwitchCase="'checkbox'"
+        [form]="form"
+        [fieldName]="fieldName"
+        [config]="config.fields[fieldName]"
+      ></app-checkbox-field>
+      <app-textarea-field
+        *ngSwitchCase="'textarea'"
+        [form]="form"
+        [fieldName]="fieldName"
+        [config]="config.fields[fieldName]"
+      ></app-textarea-field>
+      <app-file-field
+        *ngSwitchCase="'file'"
+        [form]="form"
+        [fieldName]="fieldName"
+        [config]="config.fields[fieldName]"
+      ></app-file-field>
+      <app-password-field
+        *ngSwitchCase="'password'"
+        [form]="form"
+        [fieldName]="fieldName"
+        [config]="config.fields[fieldName]"
+      ></app-password-field>
+
+      <app-form-array
+        *ngSwitchCase="'formArray'"
+        [form]="form"
+        [fieldName]="fieldName"
+        [arrayConfig]="config.fields[fieldName]"
+      ></app-form-array>
+
+      <!-- Можно добавить fallback для неизвестных типов -->
+      <div *ngSwitchDefault>Неизвестный тип поля: {{ fieldName }}</div>
+    </ng-container>
+  </ng-container>
+
+  <button type="submit">Отправить</button>
+</form>
