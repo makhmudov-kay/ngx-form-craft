@@ -21,26 +21,23 @@ export class NumberFormComponent {
   formConfigurations: NgxFromCraftConfig[] = [
     {
       key: 'age',
-      initialValue: 10,
+      initialValue: '',
       fieldConfig: {
         type: 'input',
         inputType: 'number',
-        numberOptions: {
-          min: 20,
-          max: 80,
-        },
       },
       errorMessages: {
         required: 'Age is required',
-        min: 'Age must be at least 20',
+        min: 'Age must be at least 1',
         max: 'Age must be at most 80',
+        isNaN: 'Age must be a number',
       },
       templateOptions: {
         label: 'Age',
         size: 'large',
         placeholder: 'Enter your age',
       },
-      validators: [Validators.required, Validators.min(20), Validators.max(80)],
+      validators: [Validators.required, Validators.min(1), Validators.max(80)],
     },
     {
       key: 'price',

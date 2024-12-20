@@ -20,6 +20,8 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CustomTemplateDirective } from './shared/directives/custom-template.directive';
 import { NgxFormCraftErrorMessagesComponent } from './shared/components/ngx-form-craft-error-messages/ngx-form-craft-error-messages.component';
+import { NumberFormatPipe } from './shared/pipes/number-format.pipe';
+import { OnlyNumberDirective } from './shared/directives/only-number.directive';
 
 @NgModule({
   imports: [
@@ -46,6 +48,8 @@ import { NgxFormCraftErrorMessagesComponent } from './shared/components/ngx-form
     NumberTypeComponent,
     SelectComponent,
     TextareaComponent,
+    NumberFormatPipe,
+    OnlyNumberDirective,
   ],
 })
 export class NgxFormCraftModule {}

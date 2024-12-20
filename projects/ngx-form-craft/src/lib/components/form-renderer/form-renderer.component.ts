@@ -23,18 +23,17 @@ export class FormRendererComponent {
   @Input()
   form: FormGroup = new FormGroup({});
 
+  @ContentChildren(CustomTemplateDirective)
+  customTemplates!: QueryList<CustomTemplateDirective>;
+
   confirmPasswordType(field: Field) {
     return field as PasswordFieldWithConfirm;
   }
-
-  @ContentChildren(CustomTemplateDirective)
-  customTemplates!: QueryList<CustomTemplateDirective>;
 
   getCustomTemplate(fieldKey: string) {
     const directive = this.customTemplates.find(
       (templateDirective) => templateDirective.customTemplate === fieldKey
     );
-
     return directive ? directive.template : null;
   }
 }

@@ -1,5 +1,5 @@
 <nz-form-item>
-  <nz-form-label>{{ field.templateOptions.label }}</nz-form-label>
+  <nz-form-label>{{ field.templateOptions.label }} 12312</nz-form-label>
   <nz-form-control [nzErrorTip]="errorTpl">
     <nz-input-group
       [nzSuffix]="suffixTemplateInfo"
@@ -8,11 +8,12 @@
     >
       <input
         nz-input
-        type="number"
-        [formControlName]="field.key"
-        [min]="numberTypeField.numberOptions.min || null"
-        [max]="numberTypeField.numberOptions.max || null"
+        type="text"
+        [formControl]="control"
         [placeholder]="field.templateOptions.placeholder"
+        [value]="control?.value | ngxNumberFormat"
+        ngxOnlyNumber
+        (input)="onNumberInput($event)"
     /></nz-input-group>
   </nz-form-control>
   <ng-template #errorTpl let-control>

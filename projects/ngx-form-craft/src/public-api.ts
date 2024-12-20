@@ -30,6 +30,7 @@ export * from './lib/components/field-types/number-type/number-type.component';
 export * from './lib/components/field-types/select/select.component';
 export * from './lib/components/field-types/textarea/textarea.component';
 export * from './lib/shared/components/ngx-form-craft-error-messages/ngx-form-craft-error-messages.component';
+export * from './lib/shared/components/abstract/base-field.component';
 
 /* UTILITIES */
 export * from './lib/utils/confirm-password.util';
@@ -37,3 +38,7 @@ export * from './lib/utils/custom-validators';
 
 /* DIRECTIVES */
 export * from './lib/shared/directives/custom-template.directive';
+export * from './lib/shared/directives/only-number.directive';
+
+/* PIPES */
+export * from './lib/shared/pipes/number-format.pipe';

@@ -10,10 +10,9 @@ export class ErrorMessagesService {
 
   getErrorMessage(
     errorMessagesList: { [key: string]: string },
-    errorKey: string,
+    errorKey: string
   ): string {
     const messages: { [key: string]: string } = errorMessagesList;
-    // Возвращаем кастомное сообщение или ключ ошибки
     return messages[errorKey] || `Ошибка: ${errorKey}`;
   }
 }
